@@ -39,7 +39,10 @@ var vm = new Vue({
 
         isActivemodal: true,
         /*titlename: '',*/
-        tableData: Array(),
+        data: {
+            tableData: Array(),
+            total:''
+        },
         
     },
     watch: {
@@ -48,6 +51,16 @@ var vm = new Vue({
             this.ChangeToSlug(data);
             console.log(this.dataForm.data.name)
         }*/
+
+        pagination(data) {
+            console.log(data)
+            // Gán lại giá trị paginatenow
+            this.datatb.paginatenow = data;
+
+
+            // Load lại bảng
+            this.loadData();
+        },
     },
     mounted: function () {
         this.loadData();
@@ -68,7 +81,7 @@ var vm = new Vue({
 
        
         openmodal() {
-            
+            console.log(this.datatb.paginatenow)
             
             this.isActivemodal = false;
         },
@@ -101,16 +114,11 @@ var vm = new Vue({
                         self.thongbaothatbai(error);
                     });
             } else {
-                console.log(self.rowId)
+                /*console.log(self.rowId)*/
                 axios.post("/Admin/Danhmucsanpham/Edit",
                     {
                         id: self.rowId,
                         name: self.dataForm.data.Name,
-                        
-                        
-
-
-
                     }
                 )
                     .then(function (response) {
@@ -124,8 +132,11 @@ var vm = new Vue({
 
         },
         pagination(data) {
+            console.log(data)
             // Gán lại giá trị paginatenow
             this.datatb.paginatenow = data;
+            
+            
             // Load lại bảng
             this.loadData();
         },
@@ -134,6 +145,7 @@ var vm = new Vue({
             const self = this;
             // Lấy index bản ghi bắt đầu
             var start = this.datatb.length * (this.datatb.paginatenow - 1);
+            /*console.log(start)*/
             self.datatb.start = start;
             // Ajax dữ liệu
             axios.post(self.datatb.url, {
@@ -144,13 +156,19 @@ var vm = new Vue({
                 
             })
                 .then(function (response) {
+                    /*console.log(response)*/
                     // Tổng số trang hiện có
-                    self.datatb.total = Math.ceil(
-                        response.data.recordsTotal / self.datatb.length
+                    self.data.tableData = response.data;
+                    /*console.log(self.data.tableData.length)*/
+
+
+                    self.data.total = Math.ceil(
+                        10 / self.data.tableData.length
                     );
-                    console.log(response.data)
+
+                    /*console.log(self.data.total)*/
+                    /*console.log(response.data)*/
                     // Dữ liệu bảng
-                    self.tableData = response.data;
 
 
 

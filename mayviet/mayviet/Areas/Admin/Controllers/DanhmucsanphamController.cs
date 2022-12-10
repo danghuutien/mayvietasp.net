@@ -64,6 +64,7 @@ namespace mayviet.Areas.Admin.Controllers
             try
             {
                 Danhmucsanpham Menu = db.Danhmucsanphams.Find(id);
+
                 Menu.Name = Name;
 
                 Menu.Create_at = DateTime.Now;
