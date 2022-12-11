@@ -41,7 +41,8 @@ var vm = new Vue({
         /*titlename: '',*/
         data: {
             tableData: Array(),
-            total:''
+            total: '',
+            paginatenow:1
         },
         
     },
@@ -51,16 +52,6 @@ var vm = new Vue({
             this.ChangeToSlug(data);
             console.log(this.dataForm.data.name)
         }*/
-
-        pagination(data) {
-            console.log(data)
-            // Gán lại giá trị paginatenow
-            this.datatb.paginatenow = data;
-
-
-            // Load lại bảng
-            this.loadData();
-        },
     },
     mounted: function () {
         this.loadData();
@@ -81,7 +72,7 @@ var vm = new Vue({
 
        
         openmodal() {
-            console.log(this.datatb.paginatenow)
+            
             
             this.isActivemodal = false;
         },
@@ -114,7 +105,7 @@ var vm = new Vue({
                         self.thongbaothatbai(error);
                     });
             } else {
-                /*console.log(self.rowId)*/
+                console.log(self.rowId)
                 axios.post("/Admin/Danhmucsanpham/Edit",
                     {
                         id: self.rowId,
@@ -134,9 +125,7 @@ var vm = new Vue({
         pagination(data) {
             console.log(data)
             // Gán lại giá trị paginatenow
-            this.datatb.paginatenow = data;
-            
-            
+            this.data.paginatenow = data;
             // Load lại bảng
             this.loadData();
         },
@@ -144,8 +133,7 @@ var vm = new Vue({
         loadData() {
             const self = this;
             // Lấy index bản ghi bắt đầu
-            var start = this.datatb.length * (this.datatb.paginatenow - 1);
-            /*console.log(start)*/
+            var start = this.datatb.length * (this.data.paginatenow - 1);
             self.datatb.start = start;
             // Ajax dữ liệu
             axios.post(self.datatb.url, {
@@ -156,17 +144,14 @@ var vm = new Vue({
                 
             })
                 .then(function (response) {
-                    /*console.log(response)*/
                     // Tổng số trang hiện có
                     self.data.tableData = response.data;
-                    /*console.log(self.data.tableData.length)*/
+                    console.log(response.data)
 
 
                     self.data.total = Math.ceil(
-                        10 / self.data.tableData.length
+                        response.data.length / 10
                     );
-
-                    /*console.log(self.data.total)*/
                     /*console.log(response.data)*/
                     // Dữ liệu bảng
 

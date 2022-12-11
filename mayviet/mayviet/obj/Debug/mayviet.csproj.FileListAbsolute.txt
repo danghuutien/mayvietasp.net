@@ -83,3 +83,8 @@ E:\GitHub\mayvietasp.net\MAYVIET\mayviet\obj\Debug\mayviet.dll
 E:\GitHub\mayvietasp.net\MAYVIET\mayviet\obj\Debug\mayviet.pdb
 E:\GitHub\mayvietasp.net\MAYVIET\mayviet\obj\Debug\mayviet.Migrations.aasdad.resources
 E:\GitHub\mayvietasp.net\MAYVIET\mayviet\obj\Debug\mayviet.csproj.GenerateResource.cache
+E:\GitHub\mayvietasp.net\MAYVIET\mayviet\bin\BouncyCastle.Crypto.dll
+E:\GitHub\mayvietasp.net\MAYVIET\mayviet\bin\DocumentFormat.OpenXml.dll
+E:\GitHub\mayvietasp.net\MAYVIET\mayviet\bin\itextsharp.dll
+E:\GitHub\mayvietasp.net\MAYVIET\mayviet\bin\DocumentFormat.OpenXml.xml
+E:\GitHub\mayvietasp.net\MAYVIET\mayviet\bin\itextsharp.xml

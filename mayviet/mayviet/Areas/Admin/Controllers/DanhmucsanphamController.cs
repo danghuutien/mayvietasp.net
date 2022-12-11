@@ -17,13 +17,13 @@ namespace mayviet.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ajax(string searchnow)
+        public ActionResult Ajax(string searchnow, int start, int length)
         {
             if (searchnow == "")
             {
-                var data = db.Danhmucsanphams.ToList();
-
-
+                var data = db.Danhmucsanphams.Where(i=>i.Id >= start).Take(length).ToList();
+                
+                
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
             else
