@@ -1,17 +1,16 @@
 ﻿using mayviet.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace mayviet.Areas.Admin.Controllers
 {
-    public class DM_NhomSanPhamController : Controller
+    public class DM_LinhVucHoatDongController : Controller
     {
         private DataContext db = new DataContext();
-        // GET: Admin/DM_NhomSanPham
+        // GET: Admin/DM_LinhVucHoatDong
         public ActionResult Index()
         {
             return View();
@@ -19,14 +18,14 @@ namespace mayviet.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Ajax(string searchnow, int start, int length)
         {
-            var recordsTotal = db.DM_NhomSanPhams.ToList().Count();
+            var recordsTotal = db.DM_LinhVucHoatDongs.ToList().Count();
             if (searchnow == "")
             {
                 /*offset($batdau)->limit($sodong)->get();*/
                 /*var data = db.Danhmucsanphams.Where(i=>i.Id > start).Take(length).ToList();*/
 
 
-                var data = db.DM_NhomSanPhams.OrderBy(x => x.Id).Skip(start).Take(length).ToList();
+                var data = db.DM_LinhVucHoatDongs.OrderBy(x => x.Id).Skip(start).Take(length).ToList();
                 var result = new
                 {
                     data = data,
@@ -36,7 +35,7 @@ namespace mayviet.Areas.Admin.Controllers
             }
             else
             {
-                var data = db.DM_NhomSanPhams.Where(i => i.Id > start).Where(i => i.TenNhomSanPham.Contains(searchnow)).Take(length).ToList();
+                var data = db.DM_LinhVucHoatDongs.Where(i => i.Id > start).Where(i => i.TenLinhVucHoatDong.Contains(searchnow)).Take(length).ToList();
                 var result = new
                 {
                     data = data,
@@ -52,8 +51,8 @@ namespace mayviet.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
 
-            DM_NhomSanPham data = db.DM_NhomSanPhams.Find(id);
-            db.DM_NhomSanPhams.Remove(data);
+            DM_LinhVucHoatDong data = db.DM_LinhVucHoatDongs.Find(id);
+            db.DM_LinhVucHoatDongs.Remove(data);
             db.SaveChanges();
             return Json(new { status = true });
 
@@ -66,13 +65,13 @@ namespace mayviet.Areas.Admin.Controllers
         }*/
 
         [HttpPost]
-        public ActionResult Edit(string TenNhomSanPham, int id)
+        public ActionResult Edit(string TenLinhVucHoatDong, int id)
         {
             try
             {
-                DM_NhomSanPham Menu = db.DM_NhomSanPhams.Find(id);
+                DM_LinhVucHoatDong Menu = db.DM_LinhVucHoatDongs.Find(id);
 
-                Menu.TenNhomSanPham = TenNhomSanPham;
+                Menu.TenLinhVucHoatDong = TenLinhVucHoatDong;
 
                 Menu.CreateByDate = DateTime.Now;
 
@@ -89,12 +88,12 @@ namespace mayviet.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(string TenNhomSanPham)
+        public ActionResult Create(string TenLinhVucHoatDong)
         {
             try
             {
-                DM_NhomSanPham myItem = new DM_NhomSanPham();
-                myItem.TenNhomSanPham = TenNhomSanPham;
+                DM_LinhVucHoatDong myItem = new DM_LinhVucHoatDong();
+                myItem.TenLinhVucHoatDong = TenLinhVucHoatDong;
                 myItem.Status = 1;
                 myItem.CreateById = null;
                 myItem.LastUpdateById = null;
@@ -102,7 +101,7 @@ namespace mayviet.Areas.Admin.Controllers
                 myItem.LastUpdateDate = null;
 
 
-                db.DM_NhomSanPhams.Add(myItem);
+                db.DM_LinhVucHoatDongs.Add(myItem);
                 db.SaveChanges();
                 return Json(new { status = true });
             }

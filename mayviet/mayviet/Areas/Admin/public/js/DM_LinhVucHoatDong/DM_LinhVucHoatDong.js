@@ -9,7 +9,7 @@ var vm = new Vue({
                 'name'
             ],
             // đường dẫn đến ajax
-            url: '/Admin/DM_TrinhDo/Ajax',
+            url: '/Admin/DM_LinhVucHoatDong/Ajax',
             // Số bản ghi trên 1 trang
             length: 10,
 
@@ -25,16 +25,16 @@ var vm = new Vue({
         rowId: '',
         statusForm: '',
         dataForm: form({
-            TenTrinhDo: '',
+            TenLinhVucHoatDong: '',
             
             
         })
             .rules({
-                TenTrinhDo: 'required',
+                TenLinhVucHoatDong: 'required',
 
             })
             .messages({
-                'TenTrinhDo.required': 'Trường bắt buộc nhập',
+                'TenLinhVucHoatDong.required': 'Trường bắt buộc nhập',
             }),
 
         isActivemodal: true,
@@ -83,7 +83,7 @@ var vm = new Vue({
         },
         saveform() {
             
-            this.dataForm.TenTrinhDo = '';
+            this.dataForm.TenLinhVucHoatDong = '';
             
 
             this.statusForm = "insert";
@@ -97,7 +97,7 @@ var vm = new Vue({
             this.closemodal()
             console.log(self.dataForm.data);
             if (this.statusForm == "insert") {
-                axios.post("/Admin/DM_TrinhDo/Create", self.dataForm.data).then(function (response) {
+                axios.post("/Admin/DM_LinhVucHoatDong/Create", self.dataForm.data).then(function (response) {
                     self.thongbaothanhcong('Lưu thành công')
                     self.loadData();
                 })
@@ -106,10 +106,10 @@ var vm = new Vue({
                     });
             } else {
                 console.log(self.rowId)
-                axios.post("/Admin/DM_TrinhDo/Edit",
+                axios.post("/Admin/DM_LinhVucHoatDong/Edit",
                     {
                         id: self.rowId,
-                        TenTrinhDo: self.dataForm.data.TenTrinhDo,
+                        TenLinhVucHoatDong: self.dataForm.data.TenLinhVucHoatDong,
                     }
                 )
                     .then(function (response) {
@@ -166,7 +166,7 @@ var vm = new Vue({
             const self = this;
             // Gán giá trị cho form
 
-            self.dataForm.TenTrinhDo = data.TenTrinhDo;
+            self.dataForm.TenLinhVucHoatDong = data.TenLinhVucHoatDong;
             
             
 
@@ -183,7 +183,7 @@ var vm = new Vue({
                 type: 'warning',
                 center: true
             }).then(() => {
-                axios.post("/Admin/DM_TrinhDo/Delete", data)
+                axios.post("/Admin/DM_LinhVucHoatDong/Delete", data)
                     .then(function (response) {
                         self.loadData();
                         console.log(response.data.status)

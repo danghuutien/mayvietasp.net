@@ -25,7 +25,7 @@ var vm = new Vue({
         rowId: '',
         statusForm: '',
         dataForm: form({
-            Name: '',
+            TenNganhNghe: '',
             
             
         })
