@@ -123,18 +123,20 @@ var vm = new Vue({
 
         },
         pagination(data) {
-            console.log(data)
+            /*console.log(data)*/
             // Gán lại giá trị paginatenow
             this.data.paginatenow = data;
             // Load lại bảng
             this.loadData();
+            /*console.log(this.datatb.start)*/
         },
         // load lại dữ liệu
         loadData() {
             const self = this;
             // Lấy index bản ghi bắt đầu
             var start = this.datatb.length * (this.data.paginatenow - 1);
-            self.datatb.start = start;
+            console.log(start)
+            this.datatb.start = start;
             // Ajax dữ liệu
             axios.post(self.datatb.url, {
                 start: this.datatb.start,
@@ -145,12 +147,12 @@ var vm = new Vue({
             })
                 .then(function (response) {
                     // Tổng số trang hiện có
-                    self.data.tableData = response.data;
+                    self.data.tableData = response.data.data;
                     console.log(response.data)
 
 
                     self.data.total = Math.ceil(
-                        response.data.length / 10
+                        response.data.recordsTotal / 10
                     );
                     /*console.log(response.data)*/
                     // Dữ liệu bảng

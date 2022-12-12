@@ -1,6 +1,8 @@
 ﻿using mayviet.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,24 +21,31 @@ namespace mayviet.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Ajax(string searchnow, int start, int length)
         {
+            var recordsTotal = db.Danhmucsanphams.ToList().Count();
             if (searchnow == "")
             {
-                var data = db.Danhmucsanphams.Where(i=>i.Id >= start).Take(length).ToList();
-                
-                
-                return Json(data, JsonRequestBehavior.AllowGet);
+                /*offset($batdau)->limit($sodong)->get();*/
+                /*var data = db.Danhmucsanphams.Where(i=>i.Id > start).Take(length).ToList();*/
+
+
+                var data = db.Danhmucsanphams.OrderBy(x => x.Id).Skip(start).Take(length).ToList();
+                var result = new
+                {
+                    data = data,
+                    recordsTotal = recordsTotal
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                var data = db.Danhmucsanphams.Where(i => i.Name.Contains(searchnow)).ToList();
-
-                return Json(data, JsonRequestBehavior.AllowGet);
-
+                var data = db.Danhmucsanphams.Where(i => i.Id > start).Where(i => i.Name.Contains(searchnow)).Take(length).ToList();
+                var result = new
+                {
+                    data = data,
+                    recordsTotal = recordsTotal
+                };
+                return Json(result, JsonRequestBehavior.AllowGet);
             }
-
-
-
-
         }
 
 
@@ -91,6 +100,7 @@ namespace mayviet.Areas.Admin.Controllers
 
                 
                 myItem.Create_at = DateTime.Now;
+               
                 db.Danhmucsanphams.Add(myItem);
                 db.SaveChanges();
                 return Json(new { status = true });

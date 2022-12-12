@@ -13,6 +13,8 @@ namespace mayviet.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        public string THumbnail { get; set; }
+        public string Content { get; set; }
         public DateTime? Create_at { get; set; }
         public DateTime? Update_at { get; set; }
     }
